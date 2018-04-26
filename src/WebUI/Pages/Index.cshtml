@@ -1,0 +1,12 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row">
+    <blockquote class="blockquote">
+        <p class="mb-0">@Model.quote.text</p>
+        <footer class="blockquote-footer">@Model.quote.attribution</footer>
+    </blockquote>
+</div>
