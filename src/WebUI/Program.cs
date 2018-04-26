@@ -19,7 +19,7 @@ namespace WebUI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(config => config.AddKeyPerFile("/etc/something", optional: true))
+//                .ConfigureAppConfiguration(config => config.AddKeyPerFile("/etc/something", optional: true))
                 .UseStartup<Startup>();
     }
 }

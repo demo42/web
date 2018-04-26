@@ -1,7 +1,5 @@
 FROM microsoft/dotnet-nightly:2.1-aspnetcore-runtime AS base
 WORKDIR /app
-EXPOSE 25907
-EXPOSE 44341
 
 FROM microsoft/dotnet-nightly:2.1-sdk AS build
 WORKDIR /src

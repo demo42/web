@@ -5,8 +5,11 @@
 }
 
 <div class="row">
+    @if(Model.quote != null)
+    {
     <blockquote class="blockquote">
         <p class="mb-0">@Model.quote.text</p>
         <footer class="blockquote-footer">@Model.quote.attribution</footer>
     </blockquote>
+    }
 </div>
