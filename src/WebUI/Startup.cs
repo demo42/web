@@ -27,6 +27,7 @@ namespace WebUI
         {
             services.AddHttpClient<QuoteClient>(client =>
             {
+                // client.BaseAddress = new Uri("https://quotes/");
                 client.BaseAddress = new Uri(Configuration["QuotesUri"]);
             })
             .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));

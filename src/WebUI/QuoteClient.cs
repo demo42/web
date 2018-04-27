@@ -25,6 +25,7 @@ namespace WebUI
             }
             catch (System.Exception ex)
             {
+                _logger.LogError(ex, _client.BaseAddress.ToString());
                 _logger.LogError(ex, "Unable to retrieve quote.");
                 return null;
             }
