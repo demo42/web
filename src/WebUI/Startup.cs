@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 
 namespace WebUI
 {
@@ -27,7 +28,8 @@ namespace WebUI
             services.AddHttpClient<QuoteClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["QuotesUri"]);
-            });
+            })
+            .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
