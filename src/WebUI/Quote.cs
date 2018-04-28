@@ -10,6 +10,8 @@ namespace WebUI
         public int id { get; set; }
         public string text { get; set; }
         public string attribution { get; set; }
+        //public Version version { get; set; }
+        
     }
 
 }

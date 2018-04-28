@@ -12,9 +12,17 @@ namespace WebUI.Pages
         public Quote quote;
         public QuoteClient Client { get; }
 
+        public Version Version{ get; private set;}
+
         public IndexModel(QuoteClient client)
         {
             Client = client;
+            var envVersion = new Version(Environment.GetEnvironmentVariable("VERSION"));
+            if (envVersion != null){
+                Version=new Version(envVersion.ToString());
+            } else{
+                Version=new Version("0.0.0");
+            }
         }
 
         public async Task OnGet()
