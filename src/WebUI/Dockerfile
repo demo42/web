@@ -16,5 +16,5 @@ RUN dotnet publish WebUI.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENV VERSION=0.0.5
+ENV VERSION=0.0.6
 ENTRYPOINT ["dotnet", "WebUI.dll"]
