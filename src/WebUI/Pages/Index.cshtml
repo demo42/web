@@ -3,18 +3,19 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@if(Model.quote != null) {
+    <div class="row">
+        <H1>Quote of the day</H1>
+        <blockquote class="blockquote">
+            <p class="mb-0">@Model.quote.text</p>
+            <footer class="blockquote-footer">@Model.quote.attribution</footer>
+        </blockquote>
+    </div>
+} 
+else {
+    <p>The sun will come out tomorrow...</p>
+}
+<h1>The important part of the site</h1>
+Here's where the business is done. 
 
-<div class="row">
-    @if(Model.quote != null)
-    {
-    <blockquote class="blockquote">
-        <p class="mb-0">@Model.quote.text</p>
-        <footer class="blockquote-footer">@Model.quote.attribution</footer>
-    </blockquote>
-    }
-    else
-    {
-        <p>Here I was, now I'm gone, gone</p>
-    }
-    <p>Version: @Model.Version</p>
-</div>
+<footer>Version: @Model.Version</footer>
