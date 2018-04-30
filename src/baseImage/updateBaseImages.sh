@@ -35,16 +35,17 @@ echo "IMAGE:    "$_base_image_version
 echo "REGISTRY: "$_registry_name
 
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo *****************************
+
+echo ----------------------------
 echo Pull/Tag/Push aspnetcore RUNTIME:${_base_image_version}
-echo *****************************
+echo ----------------------------
 
 docker pull microsoft/dotnet-nightly:${_base_image_version}-aspnetcore-runtime
 
 _new_image=${_registry_name}baseimages/microsoft/aspnetcore-runtime:linux-${_base_image_version}
 
 docker build \
-  -f Dockerfile-runtime \
+  -f runtime.Dockerfile \
   -t $_new_image \
   --build-arg BASE_IMAGE_VERSION=${_base_image_version} \
   --build-arg IMAGE_BUILD_DATE=`date +%Y%m%d-%H%M%S` \
@@ -52,15 +53,16 @@ docker build \
 
 docker push $_new_image
 exit
-echo *****************************
+
+echo ----------------------------
 echo Pull/Tag/Push dotnet SDK:${_base_image_version}
-echo *****************************
+echo ----------------------------
 docker pull microsoft/dotnet-nightly:${_base_image_version}-sdk
 
 _new_image=${_registry_name}baseimages/microsoft/dotnet-sdk:linux-${_base_image_version}
 
 docker build \
-  -f Dockerfile-sdk \
+  -f sdk.Dockerfile \
   -t $_new_image \
   --build-arg BASE_IMAGE_VERSION=${_base_image_version} \
   --build-arg IMAGE_BUILD_DATE=`date +%Y%m%d-%H%M%S` \
