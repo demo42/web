@@ -32,7 +32,8 @@ namespace WebUI
                 client.BaseAddress = new Uri(Configuration["QuotesUri"]);
             })
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(5))
-            .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));
+            .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3))
+            .AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(3, TimeSpan.FromSeconds(10)));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
