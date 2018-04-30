@@ -11,7 +11,6 @@ namespace WebUI.Pages
     {
         public Quote quote;
         public QuoteClient Client { get; }
-
         public Version Version{ get; private set;}
 
         public IndexModel(QuoteClient client)

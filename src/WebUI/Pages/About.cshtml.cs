@@ -21,11 +21,15 @@ namespace WebUI.Pages
         public string AspNetCorePackageVersion {get;set;}
         public string AspNetCoreEnvironment {get;set;}
         public string EnvironmentVariables {get;set;}
+        public string ImageBuildDate{ get; private set;}
+        public string BaseImageVersion { get; private set;}
+        public string RegistryUrl {get; set;}
 
         public void OnGet()
         {
             Message = "Debugging Info.";
-            RegistryIp = System.Net.Dns.GetHostAddresses("jengademos.azurecr.io")[0].ToString();
+            RegistryUrl = Environment.GetEnvironmentVariable("REGISTRY_URL");
+            RegistryIp = System.Net.Dns.GetHostAddresses(RegistryUrl)[0].ToString();
             HostName = Environment.GetEnvironmentVariable("COMPUTERNAME") ??
                                             Environment.GetEnvironmentVariable("HOSTNAME");
             OsArchitecture = RuntimeInformation.OSArchitecture.ToString();
@@ -34,6 +38,8 @@ namespace WebUI.Pages
             FrameworkDescription = RuntimeInformation.FrameworkDescription;
             AspNetCorePackageVersion  = Environment.GetEnvironmentVariable("ASPNETCORE_PKG_VERSION");
             AspNetCoreEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            ImageBuildDate = Environment.GetEnvironmentVariable("IMAGE_BUILD_DATE");
+            BaseImageVersion = Environment.GetEnvironmentVariable("BASE_IMAGE_VERSION");
             StringBuilder envVars = new StringBuilder();
             foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
                 envVars.Append(string.Format("<strong>{0}</strong>:{1}<br \\>", de.Key, de.Value));
