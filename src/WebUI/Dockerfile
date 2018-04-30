@@ -31,7 +31,7 @@ RUN date
 RUN echo ------------------
 WORKDIR /app
 COPY --from=publish /app .
-ENV VERSION=0.0.10
+ENV VERSION=0.0.11
 ENTRYPOINT ["dotnet", "WebUI.dll"]
 RUN echo ---- build-complete
 RUN date
