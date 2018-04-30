@@ -24,12 +24,14 @@ namespace WebUI.Pages
         public string ImageBuildDate{ get; private set;}
         public string BaseImageVersion { get; private set;}
         public string RegistryUrl {get; set;}
+        public string BackgroundColor {get;set;}
 
         public void OnGet()
         {
             try
             {
                 Message = "Debugging Info.";
+                BackgroundColor = Environment.GetEnvironmentVariable("BACKGROUND_COLOR");
                 var path = Environment.GetEnvironmentVariable("REGISTRY_NAME");
                 RegistryUrl = path.Replace("/", "");
                 RegistryIp = System.Net.Dns.GetHostAddresses(RegistryUrl)[0].ToString();
