@@ -1,0 +1,7 @@
+ARG IMAGE_VERSION
+FROM microsoft/dotnet-nightly:${IMAGE_VERSION}-aspnetcore-runtime
+# added a second time to ensure the arg is in scope in this stage
+ARG IMAGE_VERSION 
+ARG IMAGE_BUILD_DATE
+ENV IMAGE_VERSION=${IMAGE_VERSION}
+ENV IMAGE_BUILD_DATE=${IMAGE_BUILD_DATE}
