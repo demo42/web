@@ -29,8 +29,8 @@ namespace WebUI
             {
                 // client.BaseAddress = new Uri("https://quotes/");
                 client.BaseAddress = new Uri(Configuration["QuotesUri"]);
-            })
-            .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));
+            });
+            //.AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
