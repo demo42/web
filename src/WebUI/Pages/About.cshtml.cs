@@ -30,7 +30,8 @@ namespace WebUI.Pages
             try
             {
                 Message = "Debugging Info.";
-                RegistryUrl = Environment.GetEnvironmentVariable("REGISTRY_NAME");
+                var path = Environment.GetEnvironmentVariable("REGISTRY_NAME");
+                RegistryUrl = path.Replace("/", "");
                 RegistryIp = System.Net.Dns.GetHostAddresses(RegistryUrl)[0].ToString();
                 HostName = Environment.GetEnvironmentVariable("COMPUTERNAME") ??
                                                 Environment.GetEnvironmentVariable("HOSTNAME");
