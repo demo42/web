@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +30,9 @@ namespace WebUI
             {
                 // client.BaseAddress = new Uri("https://quotes/");
                 client.BaseAddress = new Uri(Configuration["QuotesUri"]);
-            });
-            //.AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));
+            })
+            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(5))
+            .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
