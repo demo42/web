@@ -10,6 +10,7 @@ namespace WebUI.Pages
     public class IndexModel : PageModel
     {
         public Quote quote;
+        public string BackgroundColor {get;set;}
         public QuoteClient Client { get; }
         public Version Version{ get; private set;}
 
@@ -22,6 +23,7 @@ namespace WebUI.Pages
             } else{
                 Version=new Version("0.0.0");
             }
+            BackgroundColor = Environment.GetEnvironmentVariable("BACKGROUND_COLOR");
         }
 
         public async Task OnGet()
