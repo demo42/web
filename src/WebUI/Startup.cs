@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Queue;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
@@ -42,28 +44,43 @@ namespace WebUI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            CreateQueueIfNotExists();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            //else
-            //{
-            //    app.UseExceptionHandler("/Error");
-            //    app.UseHsts();
-            //}
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
 
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseMvc();
+        }
+
+        private void CreateQueueIfNotExists()
+        {
+            var storageAccount = CloudStorageAccount.Parse(Configuration["StorageConnectionString"]);
+
+            // Create the queue client.
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            // Retrieve a reference to a container.
+            CloudQueue queue = queueClient.GetQueueReference(Configuration["QueueName"]);
+
+            // Create the queue if it doesn't already exist
+            //TODO: Move to startup and decide which of these things we should
+            //use DI for.
+            queue.CreateIfNotExistsAsync().Wait();
         }
     }
 }

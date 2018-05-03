@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Queue;
+using Microsoft.Extensions.Configuration;
 
 namespace WebUI.Pages
 {
@@ -13,10 +16,17 @@ namespace WebUI.Pages
         public QuoteClient Client { get; }
         public Version Version{ get; private set;}
 
-        public IndexModel(QuoteClient client)
+        [FromForm]
+        public string Data { get; set; }
+
+        private IConfiguration _config;
+
+        public IndexModel(QuoteClient client, IConfiguration config)
         {
             Client = client;
-            var envVersion = new Version(Environment.GetEnvironmentVariable("VERSION"));
+            _config = config;
+
+            var envVersion = Environment.GetEnvironmentVariable("VERSION");
             if (envVersion != null){
                 Version=new Version(envVersion.ToString());
             } else{
@@ -27,6 +37,19 @@ namespace WebUI.Pages
         public async Task OnGet()
         {
             quote = await Client.GetRandomQuote();
+        }
+
+        public async Task OnPost()
+        {
+            var storageAccount = CloudStorageAccount.Parse(_config["StorageConnectionString"]);
+
+            // Create the queue client.
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            // Retrieve a reference to a container.
+            CloudQueue queue = queueClient.GetQueueReference(_config["QueueName"]);
+
+            await queue.AddMessageAsync(new CloudQueueMessage(Data));
         }
     }
 }

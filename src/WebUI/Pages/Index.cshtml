@@ -18,4 +18,12 @@ else {
 <h1>The important part of the site</h1>
 Here's where the business is done. 
 
+<form class="form-inline" method="POST">
+    <label class="sr-only" for="inlineFormInput">Name</label>
+    <input type="text" asp-for="Data" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Enter Data">
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 <footer>Version: @Model.Version</footer>
