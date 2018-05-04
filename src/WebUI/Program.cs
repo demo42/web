@@ -20,12 +20,11 @@ namespace WebUI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             var builder = WebHost.CreateDefaultBuilder(args);
-            var secretsDir = "/etc/quotes-secrets";
-            if(!System.IO.Directory.Exists(secretsDir))
+            var configPath = Environment.GetEnvironmentVariable("ConfigPath");
+            if (!string.IsNullOrEmpty(configPath))
             {
-                throw new InvalidOperationException("No secret volume mounted");
+                builder.ConfigureAppConfiguration(config => config.AddKeyPerFile(configPath, true));
             }
-            builder.ConfigureAppConfiguration(config => config.AddKeyPerFile(secretsDir, false));
             builder.UseStartup<Startup>();
             return builder;
         }
