@@ -20,6 +20,9 @@ namespace WebUI.Pages
         [FromForm]
         public string Data { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         private IConfiguration _config;
 
         public IndexModel(QuoteClient client, IConfiguration config)
@@ -33,6 +36,7 @@ namespace WebUI.Pages
             } else{
                 Version=new Version("0.0.0");
             }
+
             BackgroundColor = Environment.GetEnvironmentVariable("BACKGROUND_COLOR");
         }
 
@@ -41,7 +45,9 @@ namespace WebUI.Pages
             quote = await Client.GetRandomQuote();
         }
 
-        public async Task OnPost()
+        #region Post Data
+
+        public async Task<IActionResult> OnPost()
         {
             var storageAccount = CloudStorageAccount.Parse(_config["StorageConnectionString"]);
 
@@ -52,6 +58,11 @@ namespace WebUI.Pages
             CloudQueue queue = queueClient.GetQueueReference(_config["QueueName"]);
 
             await queue.AddMessageAsync(new CloudQueueMessage(Data));
+
+            Message = "Got it!, want to give us more data?";
+
+            return RedirectToPage();
         }
+        #endregion
     }
 }

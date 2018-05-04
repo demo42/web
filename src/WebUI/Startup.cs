@@ -28,14 +28,11 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient<QuoteClient>(client =>
-            {
-                // client.BaseAddress = new Uri("https://quotes/");
-                client.BaseAddress = new Uri(Configuration["QuotesUri"]);
-            })
-            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(5))
-            .AddTransientHttpErrorPolicy(policy => policy.RetryAsync(3))
-            .AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(3, TimeSpan.FromSeconds(10)));
+            services.AddHttpClient<QuoteClient>()
+                    .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(10))
+                    .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync(2))
+                    .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
