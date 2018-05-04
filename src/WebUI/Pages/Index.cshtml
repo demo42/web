@@ -8,27 +8,29 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@if(Model.quote != null) {
-    <div class="row">
-        <H1>Quote of the day</H1>
-        <blockquote class="blockquote">
-            <p class="mb-0">@Model.quote.text</p>
-            <footer class="blockquote-footer">@Model.quote.attribution</footer>
-        </blockquote>
-    </div>
-} 
-else {
-    <p>The sun will come out tomorrow...</p>
-}
+<div class="row">
+    <H1>Quote of the day</H1>
+    <blockquote class="blockquote">
+        <p class="mb-0">@Model.quote.text</p>
+        <footer class="blockquote-footer">@Model.quote.attribution</footer>
+    </blockquote>
+</div>
+
 <h1>The important part of the site</h1>
-Here's where the business is done. 
+Here's where the business is done.
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div id="alert" class="alert alert-success" role="alert"><p>@Model.Message</p></div>
+}
 
 <form class="form-inline" method="POST">
     <label class="sr-only" for="inlineFormInput">Name</label>
     <input type="text" asp-for="Data" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Enter Data">
 
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" onclick="$('.alert').alert('close')" class="btn btn-primary">Submit</button>
 </form>
 
 <footer>Version: @Model.Version</footer>
+
+

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,9 +11,10 @@ namespace WebUI
         private readonly HttpClient _client;
         private readonly ILogger<QuoteClient> _logger;
 
-        public QuoteClient(HttpClient client, ILogger<QuoteClient> logger)
+        public QuoteClient(HttpClient client, ILogger<QuoteClient> logger, IConfiguration config)
         {
             _client = client;
+            _client.BaseAddress = new Uri(config["QuotesUri"]);
             _logger = logger;
         }
 
@@ -23,10 +26,12 @@ namespace WebUI
                 result.EnsureSuccessStatusCode();
                 return await result.Content.ReadAsAsync<Quote>();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Unable to retrieve quote.");
-                return null;
+                return new Quote { id=1,
+                                   attribution ="Han Solo",
+                                   text = "Everything is fine here. How are you?" };
             }
         }
     }
