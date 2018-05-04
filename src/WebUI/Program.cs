@@ -17,8 +17,17 @@ namespace WebUI
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var builder = WebHost.CreateDefaultBuilder(args);
+            var secretsDir = "/etc/quotes-secrets";
+            if(!System.IO.Directory.Exists(secretsDir))
+            {
+                throw new InvalidOperationException("No secret volume mounted");
+            }
+            builder.ConfigureAppConfiguration(config => config.AddKeyPerFile(secretsDir, false));
+            builder.UseStartup<Startup>();
+            return builder;
+        }
     }
 }
