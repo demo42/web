@@ -43,6 +43,7 @@ namespace WebUI.Pages
 
         public async Task OnPost()
         {
+            Console.WriteLine("COnfig: " + _config["StorageConnectionString"]);
             var storageAccount = CloudStorageAccount.Parse(_config["StorageConnectionString"]);
 
             // Create the queue client.
