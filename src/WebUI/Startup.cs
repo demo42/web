@@ -48,15 +48,6 @@ namespace WebUI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        private CloudBlobContainer GetBlobContainer()
-        {
-            var storageAccount = CloudStorageAccount.Parse(Configuration["StorageConnectionString"]);
-            var blobStorage = storageAccount.CreateCloudBlobClient();
-            var container = blobStorage.GetContainerReference("dataprotection");
-            container.CreateIfNotExistsAsync().Wait();
-            return container;
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -73,6 +64,15 @@ namespace WebUI
             app.UseCookiePolicy();
 
             app.UseMvc();
+        }
+
+        private CloudBlobContainer GetBlobContainer()
+        {
+            var storageAccount = CloudStorageAccount.Parse(Configuration["StorageConnectionString"]);
+            var blobStorage = storageAccount.CreateCloudBlobClient();
+            var container = blobStorage.GetContainerReference("dataprotection");
+            container.CreateIfNotExistsAsync().Wait();
+            return container;
         }
 
         private void CreateQueueIfNotExists()
