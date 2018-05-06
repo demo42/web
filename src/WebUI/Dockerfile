@@ -1,4 +1,4 @@
-ARG REGISTRY_NAME
+ARG REGISTRY_NAME=jengademos.azurecr.io/
 FROM ${REGISTRY_NAME}baseimages/microsoft/aspnetcore-runtime:linux-2.1 AS base
 WORKDIR /app
 ARG REGISTRY_NAME

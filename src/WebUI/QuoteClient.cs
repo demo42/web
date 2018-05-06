@@ -28,7 +28,8 @@ namespace WebUI
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unable to retrieve quote.");
+                _logger.LogError(ex, string.Format(
+                     "Unable to retrieve quote. URI: {0}", _client.BaseAddress.ToString()));
                 return new Quote { id=1,
                                    attribution ="Han Solo",
                                    text = "Everything is fine here. How are you?" };
