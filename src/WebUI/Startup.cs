@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.DataProtection;
 using Polly;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace WebUI
 {
@@ -33,6 +35,14 @@ namespace WebUI
                     .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync(2))
                     .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
 
+            // Create a cloud storage account if we have a connectionString
+            string storageConnectionString =Configuration["StorageConnectionString"];
+            CloudStorageAccount storageAccount =null;
+            if(!storageConnectionString.Contains("UseDevelopmentStorage=true")){
+                storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+                services.AddDataProtection()
+                        .PersistKeysToAzureBlobStorage(GetBlobContainer(storageAccount), "keys");
+            }
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -47,8 +57,6 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //CreateQueueIfNotExists();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,9 +72,16 @@ namespace WebUI
             app.UseMvc();
         }
 
-        private void CreateQueueIfNotExists()
+        private CloudBlobContainer GetBlobContainer(CloudStorageAccount storageAccount)
         {
-            var storageAccount = CloudStorageAccount.Parse(Configuration["StorageConnectionString"]);
+            var blobStorage = storageAccount.CreateCloudBlobClient();
+            var container = blobStorage.GetContainerReference("dataprotection");
+            container.CreateIfNotExistsAsync().Wait();
+            return container;
+        }
+
+        private void CreateQueueIfNotExists(CloudStorageAccount storageAccount)
+        {
 
             // Create the queue client.
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();

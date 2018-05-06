@@ -1,4 +1,4 @@
-ARG REGISTRY_NAME
+ARG REGISTRY_NAME=jengademos.azurecr.io/
 FROM ${REGISTRY_NAME}baseimages/microsoft/aspnetcore-runtime:linux-2.1 AS base
 WORKDIR /app
 ARG REGISTRY_NAME
@@ -19,5 +19,5 @@ RUN dotnet publish WebUI.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENV VERSION=0.0.14
+ENV VERSION=0.0.15
 ENTRYPOINT ["dotnet", "WebUI.dll"]
