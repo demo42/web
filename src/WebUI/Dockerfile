@@ -8,7 +8,7 @@ FROM ${REGISTRY_NAME}baseimages/microsoft/dotnet-sdk:linux-2.1 AS build
 WORKDIR /src
 COPY ./src/WebUI/WebUI.csproj src/WebUI/
 COPY ./test/demo42tests/demo42tests.csproj ./test/demo42tests/
-COPY ./web.sln .
+COPY ./Web.sln .
 COPY ./NuGet.Config .
 RUN dotnet restore
 COPY . .
