@@ -43,13 +43,19 @@ namespace WebUI.Pages
         public async Task OnGet()
         {
             quote = await Client.GetRandomQuote();
+            Data = Words.GetWord();
         }
 
         #region Post Data
 
         public async Task<IActionResult> OnPost()
         {
-            Console.WriteLine("COnfig: " + _config["StorageConnectionString"]);
+            if(!Words.IsWordValid(Data))
+            {
+                Message = "Not saved. Nice try.";
+                return RedirectToPage();
+            }
+
             var storageAccount = CloudStorageAccount.Parse(_config["StorageConnectionString"]);
 
             // Create the queue client.

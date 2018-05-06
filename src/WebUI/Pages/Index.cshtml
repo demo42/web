@@ -21,12 +21,12 @@ Here's where the business is done.
 
 @if (!string.IsNullOrEmpty(Model.Message))
 {
-    <div id="alert" class="alert alert-success" role="alert"><p>@Model.Message</p></div>
+    <div id="alert" class="alert alert-info" role="alert"><p>@Model.Message</p></div>
 }
 
 <form class="form-inline" method="POST">
     <label class="sr-only" for="inlineFormInput">Name</label>
-    <input type="text" asp-for="Data" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Enter Data">
+    <input type="text" readonly asp-for="Data" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Enter Data">
 
     <button type="submit" onclick="$('.alert').alert('close')" class="btn btn-primary">Submit</button>
 </form>
