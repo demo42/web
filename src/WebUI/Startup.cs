@@ -36,12 +36,10 @@ namespace WebUI
                     .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
 
             // Create a cloud storage account if we have a connectionString
-            string storageConnectionString =Configuration["StorageConnectionString"];
-            CloudStorageAccount storageAccount =null;
-            if(!storageConnectionString.Contains("UseDevelopmentStorage=true")){
-                storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            if(!string.IsNullOrEmpty(Configuration["StorageConnectionString"]))
+            {
                 services.AddDataProtection()
-                        .PersistKeysToAzureBlobStorage(GetBlobContainer(storageAccount), "keys");
+                        .PersistKeysToAzureBlobStorage(GetBlobContainer(), "keys");
             }
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -72,8 +70,9 @@ namespace WebUI
             app.UseMvc();
         }
 
-        private CloudBlobContainer GetBlobContainer(CloudStorageAccount storageAccount)
+        private CloudBlobContainer GetBlobContainer()
         {
+            var storageAccount = CloudStorageAccount.Parse(Configuration["StorageConnectionString"]);
             var blobStorage = storageAccount.CreateCloudBlobClient();
             var container = blobStorage.GetContainerReference("dataprotection");
             container.CreateIfNotExistsAsync().Wait();
