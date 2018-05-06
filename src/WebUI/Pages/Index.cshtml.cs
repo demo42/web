@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Queue;
 using Microsoft.Extensions.Configuration;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 
 namespace WebUI.Pages
 {
