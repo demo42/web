@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.DataProtection;
 using Polly;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace WebUI
