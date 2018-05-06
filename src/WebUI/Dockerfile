@@ -6,8 +6,8 @@ ENV REGISTRY_NAME=${REGISTRY_NAME}
 
 FROM ${REGISTRY_NAME}baseimages/microsoft/dotnet-sdk:linux-2.1 AS build
 WORKDIR /src
-COPY ./src/WebUI/WebUI.csproj src/WebUI/
 COPY ./test/demo42tests/demo42tests.csproj ./test/demo42tests/
+COPY ./src/WebUI/WebUI.csproj src/WebUI/
 COPY ./Web.sln .
 COPY ./NuGet.Config .
 RUN dotnet restore ./src/WebUI/WebUI.csproj
