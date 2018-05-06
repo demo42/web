@@ -30,7 +30,13 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient<QuoteClient>()
+            var retryPolicy = HttpPolicyExtensions
+                                    .HandleTransientHttpError()
+                                    .Or<TimeoutRejectedException>()
+                                    .RetryAsync(3);
+
+            services.AddHttpClient<IQuoteClient, QuoteClient>()
+                    .AddPolicyHandler(retryPolicy)
                     .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(10))
                     .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync(2))
                     .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));

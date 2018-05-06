@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebUI
 {
-    public class QuoteClient
+    public class QuoteClient : IQuoteClient
     {
         private readonly HttpClient _client;
         private readonly ILogger<QuoteClient> _logger;

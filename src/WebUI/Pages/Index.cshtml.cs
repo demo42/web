@@ -14,7 +14,7 @@ namespace WebUI.Pages
     {
         public Quote quote;
         public string BackgroundColor {get;set;}
-        public QuoteClient Client { get; }
+        public IQuoteClient Client { get; }
         public Version Version{ get; private set;}
 
         [FromForm]
@@ -25,7 +25,7 @@ namespace WebUI.Pages
 
         private IConfiguration _config;
 
-        public IndexModel(QuoteClient client, IConfiguration config)
+        public IndexModel(IQuoteClient client, IConfiguration config)
         {
             Client = client;
             _config = config;

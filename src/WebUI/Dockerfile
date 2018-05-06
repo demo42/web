@@ -6,14 +6,20 @@ ENV REGISTRY_NAME=${REGISTRY_NAME}
 
 FROM ${REGISTRY_NAME}baseimages/microsoft/dotnet-sdk:linux-2.1 AS build
 WORKDIR /src
-COPY src/WebUI/WebUI.csproj src/WebUI/
-COPY NuGet.Config .
-RUN dotnet restore src/WebUI/WebUI.csproj
+COPY ./src/WebUI/WebUI.csproj src/WebUI/
+COPY ./test/demo42tests/demo42tests.csproj ./test/demo42tests/
+COPY ./web.sln .
+COPY ./NuGet.Config .
+RUN dotnet restore
 COPY . .
-WORKDIR /src/src/WebUI
-RUN dotnet build WebUI.csproj -c Release -o /app
+RUN dotnet build -c Release
+
+FROM build as test
+WORKDIR /src
+RUN dotnet test ./test/demo42tests/demo42tests.csproj
 
 FROM build AS publish
+WORKDIR ./src/WebUI
 RUN dotnet publish WebUI.csproj -c Release -o /app
 
 FROM base AS final
