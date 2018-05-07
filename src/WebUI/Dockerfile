@@ -26,5 +26,5 @@ ENV REGISTRY_NAME=${REGISTRY_NAME}
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENV VERSION=0.0.17
+ENV VERSION=0.0.18
 ENTRYPOINT ["dotnet", "WebUI.dll"]
