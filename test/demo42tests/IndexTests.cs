@@ -23,15 +23,6 @@ namespace demo42tests
             Assert.Equal("Not saved. Nice try.", pageUnderTest.Message);
             Assert.IsAssignableFrom<Microsoft.AspNetCore.Mvc.RedirectToPageResult>(result);
         }
-
-        [Fact]
-        public void TestBackgroundColor()
-        {
-            var valueTested = Environment.GetEnvironmentVariable("SOMETHING_UNEXPECTED");
-            Assert.True(string.IsNullOrEmpty(valueTested) ||
-                        colorUnderTest == "Good" ||
-                        colorUnderTest == "Wonderful" );
-        }
     }
 
     public class MockQueueClient : IQuoteClient
