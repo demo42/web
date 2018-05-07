@@ -27,10 +27,10 @@ namespace demo42tests
         [Fact]
         public void TestBackgroundColor()
         {
-            var colorUnderTest = Environment.GetEnvironmentVariable("BACKGROUND_COLOR");
-            Assert.True(string.IsNullOrEmpty(colorUnderTest) ||
-                        colorUnderTest == "White" ||
-                        colorUnderTest == "Azure" );
+            var valueTested = Environment.GetEnvironmentVariable("SOMETHING_UNEXPECTED");
+            Assert.True(string.IsNullOrEmpty(valueTested) ||
+                        colorUnderTest == "Good" ||
+                        colorUnderTest == "Wonderful" );
         }
     }
 
