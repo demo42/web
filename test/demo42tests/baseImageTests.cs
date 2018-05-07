@@ -20,7 +20,8 @@ namespace demo42tests{
 
             Assert.True(string.IsNullOrEmpty(valueTested) ||
                         valueTested == "Good" ||
-                        valueTested == "Wonderful");
+                        valueTested == "Amazing" ||
+                        valueTested == "Great");
         }
     }
 }
