@@ -17,8 +17,6 @@ using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Polly.Extensions.Http;
-using Polly.Timeout;
 
 namespace WebUI
 {
@@ -34,7 +32,10 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IQuoteClient, QuoteClient>();
+            services.AddHttpClient<IQuoteClient, QuoteClient>()
+                    .AddTransientHttpErrorPolicy(pb => pb.RetryAsync(3))
+                    .AddTransientHttpErrorPolicy(pb => pb.CircuitBreakerAsync(3, TimeSpan.FromSeconds(20)))
+                    .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(5));
 
             // Create a cloud storage account if we have a connectionString
             if(!string.IsNullOrEmpty(Configuration["StorageConnectionString"]))
