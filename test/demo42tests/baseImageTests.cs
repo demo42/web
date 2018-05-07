@@ -17,8 +17,7 @@ namespace demo42tests
             var valueTested = Environment.GetEnvironmentVariable("SOMETHING_UNEXPECTED");
             Assert.True(string.IsNullOrEmpty(valueTested) ||
                         valueTested == "Good" ||
-                        valueTested == "Wonderful" ||
-                        valueTested == "Ehhh" );
+                        valueTested == "Wonderful";
         }
     }
 }
