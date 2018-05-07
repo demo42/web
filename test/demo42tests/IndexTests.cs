@@ -7,13 +7,10 @@ using WebUI;
 using WebUI.Pages;
 using Xunit;
 
-namespace demo42tests
-{
-    public class IndexTests
-    {
+namespace demo42tests{
+    public class IndexTests    {
         [Fact]
-        public async Task Index_Post_Validates_Words()
-        {
+        public async Task Index_Post_Validates_Words(){
             var pageUnderTest = new IndexModel(new MockQueueClient(), new MockConfig());
 
             pageUnderTest.Data = "InvalidWordData";
@@ -25,30 +22,27 @@ namespace demo42tests
         }
     }
 
-    public class MockQueueClient : IQuoteClient
-    {
-        public Task<Quote> GetRandomQuote()
-        {
+    public class MockQueueClient : IQuoteClient{
+        public Task<Quote> GetRandomQuote(){
             throw new Exception();
         }
     }
 
-    public class MockConfig : IConfiguration
-    {
-        public string this[string key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public class MockConfig : IConfiguration{
+        public string this[string key] { 
+            get => throw new NotImplementedException(); 
+            set => throw new NotImplementedException(); 
+        }
 
-        public IEnumerable<IConfigurationSection> GetChildren()
-        {
+        public IEnumerable<IConfigurationSection> GetChildren(){
             throw new NotImplementedException();
         }
 
-        public IChangeToken GetReloadToken()
-        {
+        public IChangeToken GetReloadToken(){
             throw new NotImplementedException();
         }
 
-        public IConfigurationSection GetSection(string key)
-        {
+        public IConfigurationSection GetSection(string key){
             throw new NotImplementedException();
         }
     }

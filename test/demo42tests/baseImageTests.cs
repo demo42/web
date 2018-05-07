@@ -7,21 +7,20 @@ using WebUI;
 using WebUI.Pages;
 using Xunit;
 
-namespace demo42tests
-{
-    public class BaseImageTests
-    {
+namespace demo42tests{
+    public class BaseImageTests{
         [Fact]
-        public void Base_Image_Validated_Expected()
-        {
-            var valueTested = Environment.GetEnvironmentVariable("SOMETHING_UNEXPECTED");
+        public void Base_Image_Validated_Expected(){
+            var valueTested = 
+                Environment.GetEnvironmentVariable("SOMETHING_UNEXPECTED");
+
             Console.WriteLine(
                 string.Format("valueTested: {0}, from envVar: SOMETHING_UNEXPECTED",
                                 valueTested));
+
             Assert.True(string.IsNullOrEmpty(valueTested) ||
                         valueTested == "Good" ||
-                        valueTested == "Wonderful" ||
-                        valueTested == "Amazing");
+                        valueTested == "Wonderful");
         }
     }
 }
