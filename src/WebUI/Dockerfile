@@ -9,9 +9,9 @@ RUN dotnet restore ./src/WebUI/WebUI.csproj
 COPY . .
 RUN dotnet build -c Release ./src/WebUI/WebUI.csproj
 
-FROM build as test
-WORKDIR /src
-RUN dotnet test ./test/demo42tests/demo42tests.csproj
+# FROM build as test
+# WORKDIR /src
+# RUN dotnet test ./test/demo42tests/demo42tests.csproj
 
 FROM build AS publish
 WORKDIR ./src/WebUI
