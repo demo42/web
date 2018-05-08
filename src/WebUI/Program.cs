@@ -10,12 +10,12 @@ using Microsoft.Extensions.Logging;
 
 namespace WebUI{
     public class Program{
-        public static void Main(string[] args){
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
         public static IWebHostBuilder CreateWebHostBuilder(string[] args){
+
             var builder = WebHost.CreateDefaultBuilder(args);
+            // Add secrets configuration via a files added through 
+            // kubernetes secrets
+            // just need the path in kube that weill contain the secrets
             var configPath = Environment.GetEnvironmentVariable("ConfigPath");
             if (!string.IsNullOrEmpty(configPath)){
                 builder.ConfigureAppConfiguration(
@@ -23,6 +23,9 @@ namespace WebUI{
             }
             builder.UseStartup<Startup>();
             return builder;
+        }
+        public static void Main(string[] args){
+            CreateWebHostBuilder(args).Build().Run();
         }
     }
 }
