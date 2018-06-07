@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebUI.Pages
 {
-    public class ContactModel : PageModel
-    {
+    public class ContactModel : PageModel{
         public string Message { get; set; }
 
-        public void OnGet()
-        {
+        public void OnGet(){
             Message = "Your contact page.";
         }
     }
