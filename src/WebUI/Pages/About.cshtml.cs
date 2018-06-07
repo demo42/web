@@ -7,10 +7,8 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Diagnostics;
-namespace WebUI.Pages
-{
-    public class AboutModel : PageModel
-    {
+namespace WebUI.Pages{
+    public class AboutModel : PageModel{
         public string Message { get; set; }
         public string RegistryIp {get; set;}
         public string HostName {get;set;}
@@ -26,10 +24,8 @@ namespace WebUI.Pages
         public string RegistryUrl {get; set;}
         public string BackgroundColor {get;set;}
 
-        public void OnGet()
-        {
-            try
-            {
+        public void OnGet(){
+            try{
                 Message = "Debugging Info.";
                 BackgroundColor = Environment.GetEnvironmentVariable("BACKGROUND_COLOR");
                 var path = Environment.GetEnvironmentVariable("REGISTRY_NAME");
@@ -46,8 +42,7 @@ namespace WebUI.Pages
                 ImageBuildDate = Environment.GetEnvironmentVariable("IMAGE_BUILD_DATE");
                 BaseImageVersion = Environment.GetEnvironmentVariable("BASE_IMAGE_VERSION");
             }
-            catch (System.Exception ex)
-            {
+            catch (System.Exception ex){
                 
                 Message=ex.ToString();
             }
