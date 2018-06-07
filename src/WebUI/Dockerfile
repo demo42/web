@@ -27,4 +27,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
 ENV VERSION=0.0.18
+ENV ASPNETCORE_ENVIRONMENT=development
 ENTRYPOINT ["dotnet", "WebUI.dll"]
