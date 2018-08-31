@@ -4,7 +4,7 @@ WORKDIR /src
 COPY ./test/demo42tests/demo42tests.csproj ./test/demo42tests/
 COPY ./src/WebUI/WebUI.csproj src/WebUI/
 COPY ./Web.sln .
-COPY ./NuGet.Config .
+
 RUN dotnet restore ./src/WebUI/WebUI.csproj
 COPY . .
 RUN dotnet build -c Release ./src/WebUI/WebUI.csproj
