@@ -1,5 +1,5 @@
 ARG REGISTRY_NAME=demo42.azurecr.io/
-FROM ${REGISTRY_NAME}baseimages/microsoft/dotnet-sdk:linux-2.1 AS build
+FROM ${REGISTRY_NAME}baseimages/microsoft/dotnet/sdk:linux-2.1 AS build
 WORKDIR /src
 COPY ./test/demo42tests/demo42tests.csproj ./test/demo42tests/
 COPY ./src/WebUI/WebUI.csproj src/WebUI/
@@ -18,7 +18,7 @@ WORKDIR ./src/WebUI
 RUN dotnet publish WebUI.csproj -c Release -o /app
 
 ARG REGISTRY_NAME=demo42.azurecr.io/
-FROM ${REGISTRY_NAME}baseimages/microsoft/aspnetcore-runtime:linux-2.1 AS base
+FROM ${REGISTRY_NAME}baseimages/microsoft/aspnetcore/runtime:linux-2.1 AS base
 WORKDIR /app
 ARG REGISTRY_NAME
 ENV REGISTRY_NAME=${REGISTRY_NAME}
