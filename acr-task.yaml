@@ -3,7 +3,7 @@ steps:
   - build: -t {{.Run.Registry}}/demo42/web:{{.Run.ID}}  --file ./src/WebUI/Dockerfile --build-arg REGISTRY_NAME={{.Run.Registry}}/ .
   #- push: {{.Run.Registry}}/demo42/web:{{.Run.ID}}
   - cmd: docker push {{.Run.Registry}}/demo42/web:{{.Run.ID}}
-  - cmd: cmd.azurecr-test.io/helm:v2.11.0-rc.2 upgrade demo42 ./helm/importantThings --reuse-values 
+  - cmd: cmd.azurecr-test.io/helm:v2.11.0-rc.2 upgrade demo42 ./helm/importantThings --reuse-values --set web.image={{.Run.Registry}}/demo42/web:{{.Run.ID}}
     env:
       - TENANT={{.Values.TENANT}}
       - SP={{.Values.SP}}
