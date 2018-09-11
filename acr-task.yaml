@@ -1,0 +1,12 @@
+version: 1.0-preview-1
+steps:
+  - build: -t {{.Run.Registry}}/demo42/web:{{.Run.ID}}  --file ./src/WebUI/Dockerfile --build-arg REGISTRY_NAME={{.Run.Registry}}/ .
+  #- push: {{.Run.Registry}}/demo42/web:{{.Run.ID}}
+  - cmd: docker push {{.Run.Registry}}/demo42/web:{{.Run.ID}}
+  - cmd: cmd.azurecr-test.io/helm:v2.11.0-rc.2 upgrade demo42 ./helm/importantThings --reuse-values 
+    env: TENANT={{.Values.TENANT}}
+    env: SP={{.Values.SP}}
+    env: PASSWORD={{.Values.PASSWORD}}
+    env: CLUSTER_RESOURCE_GROUP={{.Values.CLUSTER_RESOURCE_GROUP}}
+    env: CLUSTER_NAME={{.Values.CLUSTER_NAME}}
+  
