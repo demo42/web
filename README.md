@@ -17,6 +17,7 @@ az acr run -f acr-task.yaml  .
 ```
 
 ## Create an ACR Task
+
 While ACR Tasks are limited to dogfood, get the environment variables from [deploy/readme.md](../deploy/readme.md#Get-the-credentials-from-KeyVault)
 ```sh
 ACR_NAME=demo42
