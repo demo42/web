@@ -18,3 +18,4 @@ steps:
       - CLUSTER_NAME={{.Values.CLUSTER_NAME}}
       - RUN_ID={{.Run.ID}}
       - RUN_REGISTRYNAME=demo42
+      - RUN_REGISTRY={{.Run.Registry}}

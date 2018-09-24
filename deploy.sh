@@ -25,5 +25,5 @@ helm fetch $RUN_REGISTRYNAME/importantThings
 
 echo -- helm upgrade demo42 ./helm/importantThings --
 helm upgrade demo42 ./helm/importantThings \
-      --reuse-values \
-      --set web.image={{.Run.Registry}}/demo42/web:$RUN_ID
+    --reuse-values \
+    --set web.image=$RUN_REGISTRY/demo42/web:$RUN_ID
