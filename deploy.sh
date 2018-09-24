@@ -28,4 +28,3 @@ echo -- helm upgrade demo42 ./helm/importantThings --
 helm upgrade demo42 ./helm/importantThings 
       --reuse-values 
       --set web.image={{.Run.Registry}}/demo42/web:$RUN_ID
-
