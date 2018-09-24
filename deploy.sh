@@ -14,14 +14,14 @@ az aks get-credentials \
     -g $CLUSTER_RESOURCE_GROUP \
     -n $CLUSTER_NAME 
 
-echo -- helm init  --
-helm init  # > /dev/null
+echo -- helm init --client-only --
+helm init --client-only # > /dev/null
 
 echo -- az acr helm repo add --
 az acr helm repo add 
 
-echo -- helm fetch $REGISTRY_NAME/importantThings --
-helm fetch $REGISTRY_NAME/importantThings
+echo -- helm fetch $RUN_REGISTRYNAME/importantThings --
+helm fetch $RUN_REGISTRYNAME/importantThings
 
 echo -- helm upgrade demo42 ./helm/importantThings --
 helm upgrade demo42 ./helm/importantThings 
