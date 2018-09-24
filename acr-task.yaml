@@ -9,13 +9,12 @@ steps:
     - {{.Run.Registry}}/demo42/web:{{.Run.ID}}
   - cmd: >
       cmd.azurecr-test.io/helm:v2.11.0-rc.2 
-      upgrade demo42 ./helm/importantThings 
-      --reuse-values 
-      --set web.image={{.Run.Registry}}/demo42/web:{{.Run.ID}}
+    entryPoint: "./deploy.sh"
     env:
       - TENANT={{.Values.TENANT}}
       - SP={{.Values.SP}}
       - PASSWORD={{.Values.PASSWORD}}
       - CLUSTER_RESOURCE_GROUP={{.Values.CLUSTER_RESOURCE_GROUP}}
       - CLUSTER_NAME={{.Values.CLUSTER_NAME}}
+      - RUN_ID={{.Run.ID}}
   
