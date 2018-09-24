@@ -1,8 +1,9 @@
+docker login cmd.azurecr-test.io -u commands -p k0k/gCDhkLbW=yjV1XflLZJH/T3Aw/yO
 #!/bin/sh
 
 set -e
 # SP, PASSWORD , CLUSTER_NAME, CLUSTER_RESOURCE_GROUP
-az configure --defaults acr=$REGISTRY_NAME
+az configure --defaults acr=$RUN_REGISTRYNAME
 
 az login \
     --service-principal \
