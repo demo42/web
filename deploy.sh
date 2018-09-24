@@ -1,4 +1,3 @@
-docker login cmd.azurecr-test.io -u commands -p k0k/gCDhkLbW=yjV1XflLZJH/T3Aw/yO
 #!/bin/sh
 
 set -e
