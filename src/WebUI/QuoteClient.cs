@@ -13,7 +13,7 @@ namespace WebUI
 
         public QuoteClient(HttpClient client, ILogger<QuoteClient> logger, IConfiguration config)
         {
-            _client = client;
+            _client = new HttpClient();
             _client.BaseAddress = new Uri(config["QuotesUri"]);
             _logger = logger;
         }
@@ -30,12 +30,7 @@ namespace WebUI
             {
                 _logger.LogError(ex, string.Format(
                      "Unable to retrieve quote. URI: {0}", _client.BaseAddress.ToString()));
-                return new Quote
-                {
-                    id = 1,
-                    text = "Everythings fine here, now. How are you?",
-                    attribution = "Han Solo"
-                };
+                throw;
             }
         }
     }
