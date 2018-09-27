@@ -28,7 +28,9 @@ ls
 
 helm fetch --untar $RUN_REGISTRYNAME/importantThings
 
+ls
+
 echo -- helm upgrade demo42 ./helm/importantThings --
-helm upgrade demo42 ./helm/importantThings \
+helm upgrade demo42 ./importantThings \
     --reuse-values \
     --set web.image=$RUN_REGISTRY/demo42/web:$RUN_ID
