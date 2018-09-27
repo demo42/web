@@ -1,12 +1,5 @@
 version: 1.0-preview-1
 steps:
-  - build: >
-      -t {{.Run.Registry}}/demo42/web:{{.Run.ID}}
-      --file ./src/WebUI/Dockerfile
-      --build-arg REGISTRY_NAME={{.Run.Registry}}/
-      .
-  - push: 
-    - {{.Run.Registry}}/demo42/web:{{.Run.ID}}
   - cmd: >
       cmd.azurecr-test.io/helm:v2.11.0-rc.2 
     entryPoint: "./deploy.sh"

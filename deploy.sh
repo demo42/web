@@ -21,6 +21,8 @@ echo -- az acr helm repo add --
 az acr helm repo add 
 
 echo -- helm fetch --untar $RUN_REGISTRYNAME/importantThings --
+ls
+
 helm fetch --untar $RUN_REGISTRYNAME/importantThings
 
 echo -- helm upgrade demo42 ./helm/importantThings --
