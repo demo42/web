@@ -3,6 +3,7 @@
 set -e
 # SP, PASSWORD , CLUSTER_NAME, CLUSTER_RESOURCE_GROUP
 az configure --defaults acr=$RUN_REGISTRYNAME
+mkdir /tmp
 
 az login \
     --service-principal \
@@ -21,14 +22,7 @@ echo -- az acr helm repo add --
 az acr helm repo add 
 
 echo -- helm fetch --untar $RUN_REGISTRYNAME/importantThings --
-mkdir /tmp
-
-ls
-
-
 helm fetch --untar $RUN_REGISTRYNAME/importantThings
-
-ls
 
 echo -- helm upgrade demo42 ./helm/importantThings --
 helm upgrade demo42 ./importantThings \
