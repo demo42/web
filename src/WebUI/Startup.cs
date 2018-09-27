@@ -40,8 +40,16 @@ namespace WebUI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services){
+            var retryPolicy = HttpPolicyExtensions
+                                    .HandleTransientHttpError()
+                                    .Or<TimeoutRejectedException>()
+                                    .RetryAsync(3);
 
-            services.AddSingleton<IQuoteClient, QuoteClient>();
+            services.AddHttpClient<IQuoteClient, QuoteClient>()
+             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(10))
+                    .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync(2))
+                    .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(
+                                                2, TimeSpan.FromSeconds(20)));
 
             // Create a cloud storage account if we have a connectionString
             if(!string.IsNullOrEmpty(Configuration["StorageConnectionString"])){
