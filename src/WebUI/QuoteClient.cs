@@ -11,7 +11,7 @@ namespace WebUI
         private readonly HttpClient _client;
         private readonly ILogger<QuoteClient> _logger;
 
-        public QuoteClient(HttpClient client, ILogger<QuoteClient> logger, IConfiguration config)
+        public QuoteClient(ILogger<QuoteClient> logger, IConfiguration config)
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri(config["QuotesUri"]);
