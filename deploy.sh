@@ -20,8 +20,8 @@ helm init --client-only # > /dev/null
 echo -- az acr helm repo add --
 az acr helm repo add 
 
-echo -- helm fetch $RUN_REGISTRYNAME/importantThings --
-helm fetch $RUN_REGISTRYNAME/importantThings
+echo -- helm fetch --untar $RUN_REGISTRYNAME/importantThings --
+helm fetch --untar $RUN_REGISTRYNAME/importantThings
 
 echo -- helm upgrade demo42 ./helm/importantThings --
 helm upgrade demo42 ./helm/importantThings \
