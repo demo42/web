@@ -27,17 +27,12 @@ az acr task create \
   -n demo42-web \
   --file acr-task.yaml \
   --context https://github.com/demo42/web.git \
-  --branch $BRANCH \
   --git-access-token $(az keyvault secret show \
             --vault-name ${AKV_NAME} \
             --name demo42-git-token \
             --query value -o tsv) \
   --set CLUSTER_NAME=demo42-staging-eus \
   --set CLUSTER_RESOURCE_GROUP=demo42-staging-eus \
-  --set-secret TENANT=$(az keyvault secret show \
-            --vault-name ${AKV_NAME} \
-            --name demo42-serviceaccount-tenant \
-            --query value -o tsv) \
   --set-secret SP=$(az keyvault secret show \
             --vault-name ${AKV_NAME} \
             --name demo42-serviceaccount-user \
@@ -46,13 +41,9 @@ az acr task create \
             --vault-name ${AKV_NAME} \
             --name demo42-serviceaccount-pwd \
             --query value -o tsv) \
-  --set-secret REGISTRY_USR=$(az keyvault secret show \
+  --set-secret TENANT=$(az keyvault secret show \
             --vault-name ${AKV_NAME} \
-            --name demo42-pull-usr \
-            --query value -o tsv) \
-  --set-secret REGISTRY_PWD=$(az keyvault secret show \
-            --vault-name ${AKV_NAME} \
-            --name demo42-pull-pwd \
+            --name demo42-serviceaccount-tenant \
             --query value -o tsv) \
   --registry $ACR_NAME 
 ```
