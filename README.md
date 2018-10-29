@@ -3,12 +3,12 @@ See [deploy/readme.md](../deploy/readme.md) for an overview of demo42
 
 ## Building the image locally
 ```sh
-docker build -t demo42/web:dev -f ./src/WebUI/Dockerfile --build-arg demo42.azurecr.io .
+docker build -t demo42/web:dev -f ./src/WebUI/Dockerfile --build-arg REGISTRY_NAME=demo42.azurecr.io .
 ```
 
 ## Building the image with ACR Build GA
 ```sh
-az acr build -t demo42/web:{{.Run.ID}} -f ./src/WebUI/Dockerfile --build-arg demo42.azurecr.io .
+az acr build -t demo42/web:{{.Run.ID}} -f ./src/WebUI/Dockerfile --build-arg REGISTRY_NAME=demo42.azurecr.io .
 ```
 
 ## Build, Test, Deploy the image(s) with ACR Tasks
