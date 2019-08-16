@@ -1,0 +1,11 @@
+version: v1.0.0
+steps:
+  - cmd: >-
+      {{.Run.Registry}}/buildx
+      build --push
+      -t {{.Run.Registry}}/web:{{.Run.ID}}
+      --file ./src/WebUI/Dockerfile
+      --build-arg REGISTRY_NAME={{.Run.Registry}}/ 
+      --cache-from={{.Run.Registry}}/web:cache
+      --cache-to=type=registry,ref={{.Run.Registry}}/web:cache,mode=max
+      .
