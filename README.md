@@ -38,7 +38,7 @@ az acr build \
   .
 ```
 
-## Build, Test, Deploy the image(s) with ACR Tasks
+## Build, Test and Deploy the image(s) with ACR Tasks
 
 ```sh
 az acr run -f acr-task.yaml .
